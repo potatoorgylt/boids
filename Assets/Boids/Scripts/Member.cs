@@ -8,6 +8,7 @@ public class Member : MonoBehaviour {
     public Vector3 velocity;
     public Vector3 acceleration;
 
+    public GameObject levelObj;
     public Level level;
     public MemberConfig conf;
 
@@ -15,7 +16,8 @@ public class Member : MonoBehaviour {
 
     private void Start()
     {
-        level = FindObjectOfType<Level>();
+        levelObj = GameObject.FindGameObjectWithTag("Level");
+        level = levelObj.GetComponent<Level>();
         conf = FindObjectOfType<MemberConfig>();
 
         position = transform.position;
@@ -29,7 +31,7 @@ public class Member : MonoBehaviour {
         velocity = velocity + acceleration * Time.deltaTime;
         velocity = Vector3.ClampMagnitude(velocity, conf.maxVelocity);
         position = position + velocity * Time.deltaTime;
-        WrapAround(ref position, -level.bounds, level.bounds);
+        WrapAround(ref position, -level.bounds/2 + transform.parent.position, level.bounds/2 + transform.parent.position);
         transform.position = position;
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(velocity), 0.15F); ;
     }
@@ -37,10 +39,10 @@ public class Member : MonoBehaviour {
     protected Vector3 Wander()
     {
         float jitter = conf.wanderJitter * Time.deltaTime;
-        wanderTarget += new Vector3(RandomBinomial() * jitter, RandomBinomial() * jitter, RandomBinomial() * jitter);
+        wanderTarget += new Vector3(RandomBinomial() * jitter, RandomBinomial() * jitter, 0); //for 2d: Vector3(0, RandomBinomial() * jitter, 0)
         wanderTarget = wanderTarget.normalized;
         wanderTarget *= conf.wanderRadius;
-        Vector3 targetInLocalSpace = wanderTarget + new Vector3(0, conf.wanderDistance, 0); //TODO: check for 3d
+        Vector3 targetInLocalSpace = wanderTarget + new Vector3(0, 0, 0); //TODO: check for 3d, for 2d: new Vector3(conf.wanderDistance, conf.wanderDistance, 0)
         Vector3 targetInWorldSpace = transform.TransformPoint(targetInLocalSpace);
         targetInWorldSpace -= this.position;
         return targetInWorldSpace.normalized;

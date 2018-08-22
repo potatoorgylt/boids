@@ -126,7 +126,7 @@ GameObject:
   - component: {fileID: 367459683}
   m_Layer: 0
   m_Name: Level
-  m_TagString: Untagged
+  m_TagString: Level
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -144,9 +144,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxFOV: 120
-  maxAcceleration: 40
-  maxVelocity: 25
-  wanderJitter: 10
+  maxAcceleration: 300
+  maxVelocity: 150
+  wanderJitter: 100
   wanderRadius: 2
   wanderDistance: 10
   wanderPriority: 10
@@ -156,7 +156,7 @@ MonoBehaviour:
   aligmentPriority: 90
   seperationRadius: 20
   seperationPriority: 90
-  avoidanceRadius: 20
+  avoidanceRadius: 50
   avoidancePriority: 700
 --- !u!114 &367459684
 MonoBehaviour:
@@ -172,12 +172,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   memberPrefab: {fileID: 8916345084088384613, guid: 315482bf4dbeab64a8ffd8e3a2c15431, type: 3}
   enemyPrefab: {fileID: 4418521708364521380, guid: 4dba9f3d71ec29f41b03b46de0ed6505, type: 3}
-  numberOfMembers: 1
-  numberOfEnemies: 0
+  numberOfMembers: 100
+  numberOfEnemies: 2
   members: []
   enemies: []
-  bounds: {x: 1000, y: 1000, z: 1000}
-  spawnRadius: 100
+  bounds: {x: 100, y: 100, z: 100}
 --- !u!4 &367459685
 Transform:
   m_ObjectHideFlags: 0
@@ -186,7 +185,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 367459682}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 23.189558, y: 46.39398, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: 135}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -268,7 +267,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 997445279}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
