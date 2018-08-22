@@ -29,4 +29,7 @@ public class MemberConfig : MonoBehaviour {
     //Avoidance Variables
     public float avoidanceRadius;
     public float avoidancePriority;
+
+    //Move Towards Variables
+    public float moveTowardsPriority;
 }

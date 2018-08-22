@@ -20,10 +20,6 @@ public class SpawnOnMosueClick : MonoBehaviour {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
-            var mousePos = Input.mousePosition;
-
-            var objectPos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.nearClipPlane));
-
             GameObject clone;
             if (Physics.Raycast(ray, out hit, 1000))
             {

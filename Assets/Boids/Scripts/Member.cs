@@ -13,6 +13,7 @@ public class Member : MonoBehaviour {
     public MemberConfig conf;
 
     Vector3 wanderTarget;
+    PointToObject pointToObj;
 
     private void Start()
     {
@@ -21,19 +22,25 @@ public class Member : MonoBehaviour {
         conf = FindObjectOfType<MemberConfig>();
 
         position = transform.position;
-        velocity = new Vector3(Random.Range(-3, 3), Random.Range(-3, 3), Random.Range(-3, 3));
+        //velocity = new Vector3(Random.Range(-3, 3), Random.Range(-3, 3), Random.Range(-3, 3));
+
+        pointToObj = Camera.main.GetComponent<PointToObject>();
     }
+
+    public float speed = 100; //fix this 
+    float step;
 
     private void Update()
     {
-        acceleration = Combine();
-        acceleration = Vector3.ClampMagnitude(acceleration, conf.maxAcceleration);
-        velocity = velocity + acceleration * Time.deltaTime;
-        velocity = Vector3.ClampMagnitude(velocity, conf.maxVelocity);
-        position = position + velocity * Time.deltaTime;
-        WrapAround(ref position, -level.bounds/2 + transform.parent.position, level.bounds/2 + transform.parent.position);
+        step = speed * Time.deltaTime;
+        acceleration = MoveTowards(pointToObj.targetPos);
+        //acceleration = Vector3.ClampMagnitude(acceleration, conf.maxAcceleration);
+        //velocity = velocity + acceleration * Time.deltaTime;
+        //velocity = Vector3.ClampMagnitude(velocity, conf.maxVelocity);
+        position = acceleration * Time.deltaTime;//position + velocity * Time.deltaTime;
+        //WrapAround(ref position, -level.bounds/2 + transform.parent.position, level.bounds/2 + transform.parent.position);
         transform.position = position;
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(velocity), 0.15F); ;
+        //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(velocity), 0.15F); ;
     }
 
     protected Vector3 Wander()
@@ -132,6 +139,11 @@ public class Member : MonoBehaviour {
     {
         Vector3 neededVelocity = (position - target).normalized * conf.maxVelocity;
         return neededVelocity - velocity;
+    }
+
+    Vector3 MoveTowards(Vector3 target)
+    {
+        return Vector3.MoveTowards(transform.position, target, step);
     }
 
     virtual protected Vector3 Combine()
